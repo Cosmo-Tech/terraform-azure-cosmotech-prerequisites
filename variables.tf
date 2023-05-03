@@ -160,3 +160,34 @@ variable "image_path" {
   type    = string
   default = "./cosmotech.png"
 }
+
+variable "create_webapp" {
+  description = "Create the Azure Active Directory Application for WebApp"
+  type        = bool
+  default     = true
+}
+
+variable "create_secrets" {
+  type    = bool
+  default = true
+}
+
+variable "disk_size_gb" {
+  type    = string
+  default = "64"
+}
+
+variable "disk_sku" {
+  type    = string
+  default = "Premium_LRS"
+}
+
+variable "disk_tier" {
+  type    = string
+  default = "P6"
+}
+
+variable "kubernetes_version" {
+  type    = string
+  default = "1.25.5"
+}
