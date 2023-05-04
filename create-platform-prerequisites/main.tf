@@ -275,6 +275,47 @@ resource "azurerm_resource_group" "platform_rg" {
   }
 }
 
+resource "azuread_application" "babylon" {
+  count            = var.create_babylon ? 1 : 0
+  display_name     = "${local.pre_name}Babylon${local.post_name}"
+  logo_image       = filebase64("cosmotech.png")
+  owners           = data.azuread_users.owners.object_ids
+  sign_in_audience = var.audience
+
+  tags = ["HideApp", "WindowsAzureActiveDirectoryIntegratedApp", var.project_stage, var.customer_name, var.project_name, "terraformed"]
+
+  required_resource_access {
+    resource_app_id = "00000003-0000-0000-c000-000000000000" # Microsoft Graph
+
+    resource_access {
+      id   = "e1fe6dd8-ba31-4d61-89e7-88639da4683d" # User.Read
+      type = "Scope"
+    }
+  }
+
+  required_resource_access {
+    resource_app_id = azuread_application.platform.application_id # Cosmo Tech Platform
+
+    resource_access {
+      id   = "6332363e-bcba-4c4a-a605-c25f23117400" # platform
+      type = "Scope"
+    }
+  }
+
+  public_client {
+    redirect_uris = ["http://localhost:8484/"]
+  }
+}
+
+resource "azuread_service_principal" "babylon" {
+  count                        = var.create_babylon ? 1 : 0
+  depends_on                   = [azuread_service_principal.swagger]
+  application_id               = azuread_application.babylon[0].application_id
+  app_role_assignment_required = false
+
+  tags = ["cosmotech", var.project_stage, var.customer_name, var.project_name, "HideApp", "WindowsAzureActiveDirectoryIntegratedApp", "terraformed"]
+}
+
 resource "azurerm_role_assignment" "rg_owner" {
   scope                = azurerm_resource_group.platform_rg.id
   role_definition_name = "Owner"

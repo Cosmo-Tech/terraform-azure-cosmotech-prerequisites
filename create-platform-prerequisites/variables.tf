@@ -98,6 +98,12 @@ variable "create_powerbi" {
   default     = true
 }
 
+variable "create_babylon" {
+  description = "Create the Azure Active Directory Application for Babylon"
+  type        = bool
+  default     = true
+}
+
 variable "create_webapp" {
   description = "Create the Azure Active Directory Application for WebApp"
   type        = bool
