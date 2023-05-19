@@ -37,7 +37,7 @@ module "create-cluster" {
   tenant_id         = var.tenant_id
   subscription_id   = var.subscription_id
   client_id         = var.client_id
-  client_secret     = var.client_secret
+  client_secret     = module.create-platform-prerequisite.out_platform_password
   managed_disk_name = var.managed_disk_name
   cluster_name      = var.cluster_name
   application_id    = module.create-platform-prerequisite.out_platform_clientid
