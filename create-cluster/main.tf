@@ -1,6 +1,7 @@
 locals {
   dns_prefix = "${var.cluster_name}-aks"
 }
+
 resource "azurerm_kubernetes_cluster" "phoenixcluster" {
   name                = var.cluster_name
   location            = var.location
@@ -18,8 +19,9 @@ resource "azurerm_kubernetes_cluster" "phoenixcluster" {
   }
 
   http_application_routing_enabled = false
-  service_principal {
-    client_id = var.client_id
+
+ service_principal {
+    client_id = var.application_id
     client_secret = var.client_secret
   }
 
