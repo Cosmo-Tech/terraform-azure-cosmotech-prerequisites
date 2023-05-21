@@ -7,7 +7,7 @@ output "out_platform_sp_client_secret" {
 }
 
 output "out_storage_account_name" {
-  value = module.create-cluster.out_storage_account
+  value = module.create-cluster.out_storage_account_name
 }
 
 output "out_storage_account_key" {
