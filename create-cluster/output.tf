@@ -13,26 +13,26 @@ output "cluster" {
   value = azurerm_kubernetes_cluster.phoenixcluster
 }
 
-output "storage_account_name" {
+output "out_storage_account_name" {
   value = azurerm_storage_account.storage_account.name
 }
 
-output "storage_account_key" {
+output "out_storage_account_key" {
   value     = azurerm_storage_account.storage_account.primary_access_key
   sensitive = true
 }
 
-output "acr_login_server" {
+output "out_acr_login_server" {
   value     = azurerm_container_registry.acr.login_server
   sensitive = true
 }
 
-output "acr_login_username" {
+output "out_acr_login_username" {
   value     = azurerm_container_registry.acr.admin_username
   sensitive = true
 }
 
-output "acr_login_password" {
+output "out_acr_login_password" {
   value     = azurerm_container_registry.acr.admin_password
   sensitive = true
 }
