@@ -10,6 +10,10 @@ output "out_platform_clientid" {
   value = azuread_application.platform.application_id
 }
 
+output "out_platform_sp_object_id" {
+  value = azuread_service_principal.platform.id
+}
+
 output "out_platform_password" {
   value     = var.create_secrets ? azuread_application_password.platform_password[0].value : null
   sensitive = true
