@@ -159,15 +159,10 @@ resource "azurerm_managed_disk" "cosmotech-database-disk" {
   create_option        = "Empty"
 }
 
-# data "azurerm_resource_group" "rg" {
-#   name = var.resource_group
-# }
-
 resource "azurerm_storage_account" "storage_account" {
-  name                = var.resource_group
-  resource_group_name = var.resource_group
-  location            = var.location
-  # tags = var.storage_account_tags
+  name                            = var.resource_group
+  resource_group_name             = var.resource_group
+  location                        = var.location
   account_tier                    = "Standard"
   account_replication_type        = "LRS"
   account_kind                    = "StorageV2"
@@ -184,10 +179,9 @@ resource "azurerm_storage_account" "storage_account" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = var.resource_group
-  resource_group_name = var.resource_group
-  location            = var.location
-  # tags = var.tags
+  name                      = var.resource_group
+  resource_group_name       = var.resource_group
+  location                  = var.location
   sku                       = "Standard"
   admin_enabled             = true
   quarantine_policy_enabled = false
@@ -205,4 +199,11 @@ resource "azurerm_container_registry" "acr" {
   public_network_access_enabled = true
   network_rule_bypass_option    = "AzureServices"
   zone_redundancy_enabled       = false
+}
+
+resource "azurerm_role_assignment" "acr-role" {
+  principal_id                     = azurerm_kubernetes_cluster.phoenixcluster.kubelet_identity[0].object_id
+  role_definition_name             = "AcrPull"
+  scope                            = azurerm_container_registry.acr.id
+  skip_service_principal_aad_check = true
 }
