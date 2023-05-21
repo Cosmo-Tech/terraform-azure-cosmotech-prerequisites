@@ -31,17 +31,17 @@ variable "managed_disk_name" {
 }
 
 variable "disk_size_gb" {
-  type = string
+  type    = string
   default = "64"
 }
 
 variable "disk_sku" {
-  type = string
+  type    = string
   default = "Premium_LRS"
 }
 
 variable "disk_tier" {
-  type = string
+  type    = string
   default = "P6"
 }
 
@@ -50,6 +50,6 @@ variable "cluster_name" {
 }
 
 variable "kubernetes_version" {
-  type = string
+  type    = string
   default = "1.25.5"
 }

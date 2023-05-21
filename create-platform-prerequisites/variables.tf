@@ -176,6 +176,6 @@ variable "user_app_role" {
 }
 
 variable "image_path" {
-  type = string
+  type    = string
   default = "./cosmotech.png"
 }

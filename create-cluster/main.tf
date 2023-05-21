@@ -3,25 +3,25 @@ locals {
 }
 
 resource "azurerm_kubernetes_cluster" "phoenixcluster" {
-  name                = var.cluster_name
-  location            = var.location
-  resource_group_name = var.resource_group
-  dns_prefix          = local.dns_prefix
-  kubernetes_version  = var.kubernetes_version
+  name                              = var.cluster_name
+  location                          = var.location
+  resource_group_name               = var.resource_group
+  dns_prefix                        = local.dns_prefix
+  kubernetes_version                = var.kubernetes_version
   role_based_access_control_enabled = true
-  private_cluster_enabled = false
-  
+  private_cluster_enabled           = false
+
   network_profile {
     load_balancer_sku = "standard"
-    outbound_type = "loadBalancer"
-    network_plugin = "azure"
-    network_policy = "calico"
+    outbound_type     = "loadBalancer"
+    network_plugin    = "azure"
+    network_policy    = "calico"
   }
 
   http_application_routing_enabled = false
 
- service_principal {
-    client_id = var.application_id
+  service_principal {
+    client_id     = var.application_id
     client_secret = var.client_secret
   }
 
@@ -150,11 +150,59 @@ resource "azurerm_kubernetes_cluster_node_pool" "monitoring" {
 }
 
 resource "azurerm_managed_disk" "cosmotech-database-disk" {
-  name = var.managed_disk_name
-  resource_group_name = var.resource_group
-  disk_size_gb = var.disk_size_gb
-  location = var.location
+  name                 = var.managed_disk_name
+  resource_group_name  = var.resource_group
+  disk_size_gb         = var.disk_size_gb
+  location             = var.location
   storage_account_type = var.disk_sku
-  tier = var.disk_tier
-  create_option = "Empty"
+  tier                 = var.disk_tier
+  create_option        = "Empty"
+}
+
+# data "azurerm_resource_group" "rg" {
+#   name = var.resource_group
+# }
+
+resource "azurerm_storage_account" "storage_account" {
+  name                = var.resource_group
+  resource_group_name = var.resource_group
+  location            = var.location
+  # tags = var.storage_account_tags
+  account_tier                    = "Standard"
+  account_replication_type        = "LRS"
+  account_kind                    = "StorageV2"
+  default_to_oauth_authentication = false
+  min_tls_version                 = "TLS1_2"
+  shared_access_key_enabled       = true
+  enable_https_traffic_only       = true
+  access_tier                     = "Hot"
+  public_network_access_enabled   = false
+  network_rules {
+    bypass         = ["AzureServices"]
+    default_action = "Deny"
+  }
+}
+
+resource "azurerm_container_registry" "acr" {
+  name                = var.resource_group
+  resource_group_name = var.resource_group
+  location            = var.location
+  # tags = var.tags
+  sku                       = "Standard"
+  admin_enabled             = true
+  quarantine_policy_enabled = false
+  trust_policy = [{
+    enabled = false
+  }]
+  retention_policy = [{
+    days    = 7
+    enabled = false
+  }]
+  # encryption = [ {
+  #   enabled = false
+  # } ]
+  data_endpoint_enabled         = false
+  public_network_access_enabled = true
+  network_rule_bypass_option    = "AzureServices"
+  zone_redundancy_enabled       = false
 }

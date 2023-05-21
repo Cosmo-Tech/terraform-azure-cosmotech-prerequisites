@@ -12,3 +12,15 @@ output "kube_config" {
 output "cluster" {
   value = azurerm_kubernetes_cluster.phoenixcluster
 }
+
+output "storage_account" {
+  value = azurerm_storage_account.storage_account.name
+}
+
+output "azurerm_container_registry" {
+  value = azurerm_container_registry.acr.name
+}
+
+output "managed_disk" {
+  value = azurerm_managed_disk.cosmotech-database-disk.id
+}
