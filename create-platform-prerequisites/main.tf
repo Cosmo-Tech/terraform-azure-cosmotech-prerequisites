@@ -31,6 +31,12 @@ resource "azuread_application" "platform" {
     redirect_uris = ["${var.platform_url}${var.api_version_path}swagger-ui/oauth2-redirect.html"]
   }
 
+  web {
+    implicit_grant {
+      access_token_issuance_enabled = true
+    }
+  }
+
   api {
     requested_access_token_version = 2
     oauth2_permission_scope {
@@ -130,6 +136,12 @@ resource "azuread_application" "swagger" {
 
   single_page_application {
     redirect_uris = ["${var.platform_url}${var.api_version_path}swagger-ui/oauth2-redirect.html"]
+  }
+
+  web {
+    implicit_grant {
+      access_token_issuance_enabled = true
+    }
   }
 }
 

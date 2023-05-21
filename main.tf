@@ -52,5 +52,5 @@ resource "azurerm_role_assignment" "managed_disk_role" {
   role_definition_name = "Owner"
   principal_id         = module.create-platform-prerequisite.out_platform_sp_object_id
 
-  depends_on = [ module.create-cluster ]
+  depends_on = [module.create-cluster]
 }
