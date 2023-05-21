@@ -33,3 +33,7 @@ output "out_acr_login_password" {
 output "managed_disk_id" {
   value = module.create-cluster.managed_disk_id
 }
+
+output "out_public_ip" {
+  value = module.create-platform-prerequisite.out_public_ip
+}
