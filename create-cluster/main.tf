@@ -45,6 +45,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "system" {
   os_type               = "Linux"
   os_disk_size_gb       = 128
   os_disk_type          = "Managed"
+  vnet_subnet_id        = var.subnet_id
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "basic" {
@@ -62,6 +63,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "basic" {
   os_disk_type          = "Managed"
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "compute", "cosmotech.com/size" = "basic" }
+  vnet_subnet_id        = var.subnet_id
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "highcpu" {
@@ -79,6 +81,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "highcpu" {
   os_disk_type          = "Managed"
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "compute", "cosmotech.com/size" = "highcpu" }
+  vnet_subnet_id        = var.subnet_id
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "highmemory" {
@@ -96,6 +99,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "highmemory" {
   os_disk_type          = "Managed"
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "compute", "cosmotech.com/size" = "highmemory" }
+  vnet_subnet_id        = var.subnet_id
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "services" {
@@ -113,6 +117,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "services" {
   os_disk_type          = "Managed"
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "services" }
+  vnet_subnet_id        = var.subnet_id
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "db" {
@@ -130,6 +135,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "db" {
   os_disk_type          = "Managed"
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "db" }
+  vnet_subnet_id        = var.subnet_id
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "monitoring" {
@@ -147,6 +153,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "monitoring" {
   os_disk_type          = "Managed"
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "monitoring" }
+  vnet_subnet_id        = var.subnet_id
 }
 
 resource "azurerm_managed_disk" "cosmotech-database-disk" {

@@ -113,3 +113,7 @@ output "out_vnet_resource_group" {
 output "out_subnet" {
   value = local.subnet_name
 }
+
+output "out_subnet_id" {
+  value = azurerm_virtual_network.platform_vnet[0].subnet
+}
