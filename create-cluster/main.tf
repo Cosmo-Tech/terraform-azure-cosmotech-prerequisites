@@ -171,7 +171,7 @@ resource "azurerm_storage_account" "storage_account" {
   shared_access_key_enabled       = true
   enable_https_traffic_only       = true
   access_tier                     = "Hot"
-  public_network_access_enabled   = false
+  public_network_access_enabled   = true
   network_rules {
     bypass         = ["AzureServices"]
     default_action = "Deny"
