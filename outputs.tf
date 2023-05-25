@@ -40,5 +40,5 @@ output "out_public_ip" {
 
 # for test purpose
 output "out_subnet" {
-  value = one(azurerm_virtual_network.platform_vnet[*].subnet)
+  value = module.create-platform-prerequisite.out_subnet
 }
