@@ -115,5 +115,5 @@ output "out_subnet_name" {
 }
 
 output "out_subnet" {
-  value = var.create_vnet ? azurerm_virtual_network.platform_vnet[*].subnet[0].id : null
+  value = one(azurerm_virtual_network.platform_vnet[*].subnet).id
 }
