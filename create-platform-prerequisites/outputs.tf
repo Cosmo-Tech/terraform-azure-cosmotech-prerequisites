@@ -110,10 +110,10 @@ output "out_vnet_resource_group" {
   value = azurerm_resource_group.platform_rg.name
 }
 
-output "out_subnet" {
+output "out_subnet_name" {
   value = local.subnet_name
 }
 
-output "out_subnet_id" {
-  value = azurerm_virtual_network.platform_vnet.*.subnet
+output "out_subnet" {
+  value = var.create_vnet ? azurerm_virtual_network.platform_vnet[0].subnet : null
 }

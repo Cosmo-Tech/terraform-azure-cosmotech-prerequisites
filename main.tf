@@ -41,7 +41,7 @@ module "create-cluster" {
   managed_disk_name = var.managed_disk_name
   cluster_name      = var.cluster_name
   application_id    = module.create-platform-prerequisite.out_platform_clientid
-  subnet_id         = module.create-platform-prerequisite.out_subnet_id[0].id
+  subnet_id         = module.create-platform-prerequisite.out_subnet.id
 
   depends_on = [
     module.create-platform-prerequisite
