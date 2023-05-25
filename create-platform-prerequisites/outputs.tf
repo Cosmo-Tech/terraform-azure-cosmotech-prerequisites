@@ -115,5 +115,5 @@ output "out_subnet" {
 }
 
 output "out_subnet_id" {
-  value = azurerm_virtual_network.platform_vnet[0].subnet
+  value = azurerm_virtual_network.platform_vnet.*.subnet
 }
