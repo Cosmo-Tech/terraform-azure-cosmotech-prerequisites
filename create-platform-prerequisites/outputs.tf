@@ -115,5 +115,5 @@ output "out_subnet_name" {
 }
 
 output "out_subnet" {
-  value = one(azurerm_virtual_network.platform_vnet[*].subnet).id
+  value = one(azurerm_virtual_network.platform_vnet[*].subnet)
 }
