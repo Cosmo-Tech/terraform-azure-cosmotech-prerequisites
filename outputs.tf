@@ -37,3 +37,8 @@ output "managed_disk_id" {
 output "out_public_ip" {
   value = module.create-platform-prerequisite.out_public_ip
 }
+
+# for test purpose
+output "out_subnet" {
+  value = one(azurerm_virtual_network.platform_vnet[*].subnet)
+}
