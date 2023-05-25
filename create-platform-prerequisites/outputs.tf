@@ -114,6 +114,13 @@ output "out_subnet_name" {
   value = local.subnet_name
 }
 
-output "out_subnet" {
-  value = one(azurerm_virtual_network.platform_vnet[*].subnet)
+locals {
+  subscription = "/subscriptions/${var.subscription_id}"
+  rg_name = "resourceGroups/${var.resource_group}"
+  vnet_name = "${var.create_vnet ? azurerm_virtual_network.platform_vnet[0].name : null}/subnets/${local.subnet_name}"
+}
+
+output "out_subnet_id" {
+  value = "${local.subscription}/${local.rg_name}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}"
+  # value = one(azurerm_virtual_network.platform_vnet[*].subnet)
 }

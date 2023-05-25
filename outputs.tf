@@ -39,6 +39,6 @@ output "out_public_ip" {
 }
 
 # for test purpose
-output "out_subnet" {
-  value = module.create-platform-prerequisite.out_subnet
+output "out_subnet_id" {
+  value = module.create-platform-prerequisite.out_subnet_id
 }
