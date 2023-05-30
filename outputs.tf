@@ -42,3 +42,11 @@ output "out_public_ip" {
 output "out_subnet_id" {
   value = module.create-platform-prerequisite.out_subnet_id
 }
+
+output "out_public_ip_name" {
+  value = module.create-platform-prerequisite.out_public_ip_name
+}
+
+output "out_ip_resource_group" {
+  value = module.create-platform-prerequisite.out_ip_resource_group
+}
