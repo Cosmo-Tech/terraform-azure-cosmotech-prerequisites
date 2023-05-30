@@ -10,9 +10,6 @@ resource "azurerm_kubernetes_cluster" "phoenixcluster" {
   kubernetes_version                = var.kubernetes_version
   role_based_access_control_enabled = true
   private_cluster_enabled           = false
-  identity {
-    type = "UserAssigned"
-  }
 
   network_profile {
     load_balancer_sku = "standard"
