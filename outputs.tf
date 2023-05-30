@@ -50,3 +50,12 @@ output "out_public_ip_name" {
 output "out_ip_resource_group" {
   value = module.create-platform-prerequisite.out_ip_resource_group
 }
+
+output "out_networkadt_clientid" {
+  value = module.create-platform-prerequisite.out_networkadt_clientid
+}
+
+output "out_network_adt_password" {
+  value     = module.create-platform-prerequisite.out_network_adt_password
+  sensitive = true
+}

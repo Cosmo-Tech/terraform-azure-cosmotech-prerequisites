@@ -116,8 +116,8 @@ output "out_subnet_name" {
 
 locals {
   subscription = "/subscriptions/${var.subscription_id}"
-  rg_name = "resourceGroups/${var.resource_group}"
-  vnet_name = "${var.create_vnet ? azurerm_virtual_network.platform_vnet[0].name : null}/subnets/${local.subnet_name}"
+  rg_name      = "resourceGroups/${var.resource_group}"
+  vnet_name    = "${var.create_vnet ? azurerm_virtual_network.platform_vnet[0].name : null}/subnets/${local.subnet_name}"
 }
 
 output "out_subnet_id" {
