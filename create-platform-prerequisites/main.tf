@@ -180,7 +180,7 @@ resource "azuread_application" "restish" {
     }
   }
 
-  single_page_application {
+  public_client {
     redirect_uris = ["http://localhost:8484/"]
   }
 }
