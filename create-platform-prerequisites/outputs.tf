@@ -122,5 +122,4 @@ locals {
 
 output "out_subnet_id" {
   value = "${local.subscription}/${local.rg_name}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}"
-  # value = one(azurerm_virtual_network.platform_vnet[*].subnet)
 }
