@@ -32,16 +32,17 @@ module "create-platform-prerequisite" {
 module "create-cluster" {
   source = "./create-cluster"
 
-  location          = var.location
-  resource_group    = var.resource_group
-  tenant_id         = var.tenant_id
-  subscription_id   = var.subscription_id
-  client_id         = var.client_id
-  client_secret     = module.create-platform-prerequisite.out_platform_password
-  managed_disk_name = var.managed_disk_name
-  cluster_name      = var.cluster_name
-  application_id    = module.create-platform-prerequisite.out_platform_clientid
-  subnet_id         = module.create-platform-prerequisite.out_subnet_id
+  location            = var.location
+  resource_group      = var.resource_group
+  tenant_id           = var.tenant_id
+  subscription_id     = var.subscription_id
+  client_id           = var.client_id
+  client_secret       = module.create-platform-prerequisite.out_platform_password
+  managed_disk_name   = var.managed_disk_name
+  cluster_name        = var.cluster_name
+  application_id      = module.create-platform-prerequisite.out_platform_clientid
+  subnet_id           = module.create-platform-prerequisite.out_subnet_id
+  private_dns_zone_id = module.create-platform-prerequisite.out_private_dns_zone_id
 
   depends_on = [
     module.create-platform-prerequisite

@@ -209,7 +209,7 @@ resource "azurerm_container_registry" "acr" {
   zone_redundancy_enabled       = false
 }
 
-resource "azurerm_private_endpoint" "private_endpoint" {
+resource "azurerm_private_endpoint" "storage_private_endpoint" {
   name                = "storage-privateendpoint"
   location            = var.location
   resource_group_name = var.resource_group
@@ -219,5 +219,10 @@ resource "azurerm_private_endpoint" "private_endpoint" {
     name                           = "privateserviceconnection"
     private_connection_resource_id = azurerm_storage_account.storage_account.id
     is_manual_connection           = false
+  }
+
+  private_dns_zone_group {
+    name                 = "storage-dns-zone-group"
+    private_dns_zone_ids = [var.private_dns_zone_id]
   }
 }

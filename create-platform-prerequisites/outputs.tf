@@ -123,3 +123,7 @@ locals {
 output "out_subnet_id" {
   value = "${local.subscription}/${local.rg_name}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}"
 }
+
+output "out_private_dns_zone_id" {
+  value = azurerm_private_dns_zone.private_dns.id
+}
