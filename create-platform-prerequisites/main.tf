@@ -398,7 +398,7 @@ resource "azurerm_role_assignment" "vnet_network_contributor" {
 
 resource "azurerm_private_dns_zone" "private_dns" {
   name                = "private-dns-zone"
-  resource_group_name = var.resource_group
+  resource_group_name = azurerm_resource_group.platform_rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "private_link" {
