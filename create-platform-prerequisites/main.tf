@@ -397,7 +397,7 @@ resource "azurerm_role_assignment" "vnet_network_contributor" {
 }
 
 resource "azurerm_private_dns_zone" "private_dns" {
-  name                = "private-dns-zone"
+  name                = "privatelink.blob.core.windows.net"
   resource_group_name = azurerm_resource_group.platform_rg.name
 }
 
