@@ -418,5 +418,6 @@ resource "azurerm_private_endpoint" "private_endpoint" {
     name                           = "privateserviceconnection"
     private_connection_resource_id = azurerm_private_dns_zone_virtual_network_link.private_link.id
     is_manual_connection           = true
+    request_message                = "Terraform deployment request"
   }
 }
