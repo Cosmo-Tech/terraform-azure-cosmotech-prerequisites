@@ -208,3 +208,16 @@ resource "azurerm_container_registry" "acr" {
   network_rule_bypass_option    = "AzureServices"
   zone_redundancy_enabled       = false
 }
+
+resource "azurerm_private_endpoint" "private_endpoint" {
+  name                = "storage-privateendpoint"
+  location            = var.location
+  resource_group_name = var.resource_group
+  subnet_id           = var.subnet_id
+
+  private_service_connection {
+    name                           = "privateserviceconnection"
+    private_connection_resource_id = azurerm_storage_account.storage_account.id
+    is_manual_connection           = false
+  }
+}

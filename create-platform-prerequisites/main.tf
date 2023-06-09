@@ -407,16 +407,3 @@ resource "azurerm_private_dns_zone_virtual_network_link" "private_link" {
   private_dns_zone_name = azurerm_private_dns_zone.private_dns.name
   virtual_network_id    = azurerm_virtual_network.platform_vnet[0].id
 }
-
-resource "azurerm_private_endpoint" "private_endpoint" {
-  name                = "aks-privateendpoint"
-  location            = azurerm_resource_group.platform_rg.location
-  resource_group_name = azurerm_resource_group.platform_rg.name
-  subnet_id           = "${local.subscription}/${local.rg_name}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}"
-
-  private_service_connection {
-    name                           = "privateserviceconnection"
-    private_connection_resource_id = azurerm_private_dns_zone_virtual_network_link.private_link.id
-    is_manual_connection           = false
-  }
-}
