@@ -360,7 +360,7 @@ resource "azurerm_role_assignment" "publicip_contributor" {
 
 resource "azurerm_role_assignment" "publicip_owner" {
   count                = var.create_publicip ? 1 : 0
-  scope                = azurerm_public_ip.publicip.id
+  scope                = var.create_publicip ? azurerm_public_ip.publicip[0].id : null
   role_definition_name = "Owner"
   principal_id         = azuread_service_principal.platform.id
 }
