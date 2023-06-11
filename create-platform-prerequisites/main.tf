@@ -358,6 +358,13 @@ resource "azurerm_role_assignment" "publicip_contributor" {
   principal_id         = azuread_service_principal.network_adt.id
 }
 
+resource "azurerm_role_assignment" "publicip_owner" {
+  count                = var.create_publicip ? 1 : 0
+  scope                = azurerm_public_ip.publicip.id
+  role_definition_name = "Owner"
+  principal_id         = azuread_service_principal.platform.id
+}
+
 resource "azurerm_dns_a_record" "platform_fqdn" {
   depends_on          = [azurerm_public_ip.publicip]
   count               = var.create_publicip && var.create_dnsrecord ? 1 : 0
