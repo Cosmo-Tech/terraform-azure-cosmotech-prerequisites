@@ -34,7 +34,7 @@ resource "azurerm_kubernetes_cluster" "phoenixcluster" {
 
   lifecycle {
     ignore_changes = [
-      tags, azure_policy_enabled,
+      tags, azure_policy_enabled, microsoft_defender,
     ]
   }
 }
@@ -212,6 +212,8 @@ resource "azurerm_managed_disk" "cosmotech-database-disk" {
   storage_account_type = var.disk_sku
   tier                 = var.disk_tier
   create_option        = "Empty"
+
+  public_network_access_enabled = false
 }
 
 resource "azurerm_storage_account" "storage_account" {
@@ -263,10 +265,29 @@ resource "azurerm_private_endpoint" "storage_private_endpoint" {
   subnet_id           = var.subnet_id
 
   private_service_connection {
-    name                           = "privateserviceconnection"
+    name                           = "privatestorageconnection"
     private_connection_resource_id = azurerm_storage_account.storage_account.id
     is_manual_connection           = false
     subresource_names              = ["blob"]
+  }
+
+  private_dns_zone_group {
+    name                 = "storage-dns-zone-group"
+    private_dns_zone_ids = [var.private_dns_zone_id]
+  }
+}
+
+resource "azurerm_private_endpoint" "disk_private_endpoint" {
+  name                = "disk-privateendpoint"
+  location            = var.location
+  resource_group_name = var.resource_group
+  subnet_id           = var.subnet_id
+
+  private_service_connection {
+    name                           = "privatediskconnection"
+    private_connection_resource_id = azurerm_managed_disk.cosmotech-database-disk.id
+    is_manual_connection           = false
+    subresource_names              = ["managed disk"]
   }
 
   private_dns_zone_group {
