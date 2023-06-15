@@ -287,7 +287,7 @@ resource "azurerm_private_endpoint" "disk_private_endpoint" {
     name                           = "privatediskconnection"
     private_connection_resource_id = azurerm_managed_disk.cosmotech-database-disk.id
     is_manual_connection           = false
-    subresource_names              = ["managed disk"]
+    subresource_names              = ["managed_disk"]
   }
 
   private_dns_zone_group {
