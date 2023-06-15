@@ -293,7 +293,7 @@ resource "azurerm_private_endpoint" "disk_private_endpoint" {
 
   private_service_connection {
     name                           = "privatediskconnection"
-    private_connection_resource_id = azurerm_managed_disk.cosmotech-database-disk.id
+    private_connection_resource_id = azurerm_disk_access.cosmotech-disk.id # Must point to the disk access resource
     is_manual_connection           = false
     subresource_names              = ["managed_disk"]
   }
