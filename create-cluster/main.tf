@@ -295,7 +295,7 @@ resource "azurerm_private_endpoint" "disk_private_endpoint" {
     name                           = "privatediskconnection"
     private_connection_resource_id = azurerm_disk_access.cosmotech-disk.id # Must point to the disk access resource
     is_manual_connection           = false
-    subresource_names              = ["managed_disk"]
+    subresource_names              = ["disks"]
   }
 
   private_dns_zone_group {
