@@ -211,10 +211,10 @@ resource "azurerm_storage_account" "storage_account" {
   shared_access_key_enabled       = true
   enable_https_traffic_only       = true
   access_tier                     = "Hot"
-  public_network_access_enabled   = true
+  public_network_access_enabled   = false # Must be false with private endpoints
   network_rules {
     bypass         = ["AzureServices"]
-    default_action = "Allow"
+    default_action = "Deny" # Same as for public_network_access
   }
 }
 
