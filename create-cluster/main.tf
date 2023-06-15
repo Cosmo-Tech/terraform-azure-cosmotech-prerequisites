@@ -204,6 +204,12 @@ resource "azurerm_kubernetes_cluster_node_pool" "monitoring" {
   }
 }
 
+resource "azurerm_disk_access" "cosmotech-disk" {
+  name                = "cosmotech-managed-disk-access"
+  resource_group_name = var.resource_group
+  location            = var.location
+}
+
 resource "azurerm_managed_disk" "cosmotech-database-disk" {
   name                 = var.managed_disk_name
   resource_group_name  = var.resource_group
@@ -214,6 +220,8 @@ resource "azurerm_managed_disk" "cosmotech-database-disk" {
   create_option        = "Empty"
 
   public_network_access_enabled = false
+  network_access_policy         = "AllowPrivate"
+  disk_access_id                = azurerm_disk_access.cosmotech-disk.id
 }
 
 resource "azurerm_storage_account" "storage_account" {
