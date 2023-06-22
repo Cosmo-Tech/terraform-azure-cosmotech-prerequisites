@@ -67,7 +67,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "basic" {
   node_count            = 2
   max_pods              = 110
   max_count             = 5
-  min_count             = 0
+  min_count             = 1
   enable_auto_scaling   = true
   mode                  = "User"
   os_type               = "Linux"
