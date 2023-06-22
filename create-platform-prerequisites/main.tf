@@ -67,6 +67,12 @@ resource "azuread_application" "platform" {
       value        = app_role.value.role_value
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      owners,
+    ]
+  }
 }
 
 resource "azuread_service_principal" "platform" {
@@ -316,6 +322,12 @@ resource "azuread_application" "babylon" {
 
   public_client {
     redirect_uris = ["http://localhost:8484/"]
+  }
+
+  lifecycle {
+    ignore_changes = [
+      owners, required_resource_access,
+    ]
   }
 }
 
