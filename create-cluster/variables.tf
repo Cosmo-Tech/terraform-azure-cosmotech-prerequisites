@@ -34,6 +34,10 @@ variable "private_dns_zone_id" {
   type = string
 }
 
+variable "principal_id" {
+  type = string
+}
+
 variable "disk_size_gb" {
   type    = string
   default = "64"

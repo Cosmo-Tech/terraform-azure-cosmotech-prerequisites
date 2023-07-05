@@ -59,3 +59,8 @@ output "out_network_adt_password" {
   value     = module.create-platform-prerequisite.out_network_adt_password
   sensitive = true
 }
+
+output "out_aks_phoenix_config" {
+  value     = module.create-cluster.aks_phoenix_config
+  sensitive = true
+}

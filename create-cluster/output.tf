@@ -40,3 +40,8 @@ output "out_acr_login_password" {
 output "managed_disk_id" {
   value = azurerm_managed_disk.cosmotech-database-disk.id
 }
+
+output "aks_phoenix_config" {
+  value     = azurerm_kubernetes_cluster.phoenixcluster.kube_config
+  sensitive = true
+}

@@ -43,16 +43,9 @@ module "create-cluster" {
   application_id      = module.create-platform-prerequisite.out_platform_clientid
   subnet_id           = module.create-platform-prerequisite.out_subnet_id
   private_dns_zone_id = module.create-platform-prerequisite.out_private_dns_zone_id
+  principal_id        = module.create-platform-prerequisite.out_platform_sp_object_id
 
   depends_on = [
     module.create-platform-prerequisite
   ]
-}
-
-resource "azurerm_role_assignment" "managed_disk_role" {
-  scope                = module.create-cluster.managed_disk_id
-  role_definition_name = "Owner"
-  principal_id         = module.create-platform-prerequisite.out_platform_sp_object_id
-
-  depends_on = [module.create-cluster]
 }

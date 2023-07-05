@@ -217,6 +217,12 @@ resource "azurerm_managed_disk" "cosmotech-database-disk" {
   disk_access_id                = azurerm_disk_access.cosmotech-disk.id
 }
 
+resource "azurerm_role_assignment" "managed_disk_role" {
+  scope                = azurerm_managed_disk.cosmotech-database-disk.id
+  role_definition_name = "Owner"
+  principal_id         = var.principal_id
+}
+
 resource "azurerm_storage_account" "storage_account" {
   name                            = var.resource_group
   resource_group_name             = var.resource_group
