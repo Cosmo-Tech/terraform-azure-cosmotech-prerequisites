@@ -42,6 +42,6 @@ output "managed_disk_id" {
 }
 
 output "aks_phoenix_config" {
-  value     = azurerm_kubernetes_cluster.phoenixcluster.kube_config
+  value     = azurerm_kubernetes_cluster.phoenixcluster.kube_config_raw
   sensitive = true
 }
