@@ -43,7 +43,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "system" {
   name                  = "system"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
   vm_size               = "Standard_A2_v2"
-  node_count            = 4
   max_pods              = 110
   max_count             = 6
   min_count             = 3
@@ -55,7 +54,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "system" {
   vnet_subnet_id        = var.subnet_id
   lifecycle {
     ignore_changes = [
-      tags, node_count,
+      tags,
     ]
   }
 }
@@ -64,7 +63,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "basic" {
   name                  = "basic"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
   vm_size               = "Standard_F4s_v2"
-  node_count            = 2
   max_pods              = 110
   max_count             = 5
   min_count             = 1
@@ -79,7 +77,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "basic" {
 
   lifecycle {
     ignore_changes = [
-      tags, node_count,
+      tags,
     ]
   }
 }
@@ -88,7 +86,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "highcpu" {
   name                  = "highcpu"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
   vm_size               = "Standard_F72s_v2"
-  node_count            = 0
   max_pods              = 110
   max_count             = 3
   min_count             = 0
@@ -103,7 +100,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "highcpu" {
 
   lifecycle {
     ignore_changes = [
-      tags, node_count,
+      tags,
     ]
   }
 }
@@ -112,7 +109,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "highmemory" {
   name                  = "highmemory"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
   vm_size               = "Standard_E16ads_v5"
-  node_count            = 0
   max_pods              = 110
   max_count             = 3
   min_count             = 0
@@ -127,7 +123,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "highmemory" {
 
   lifecycle {
     ignore_changes = [
-      tags, node_count,
+      tags,
     ]
   }
 }
@@ -136,10 +132,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "services" {
   name                  = "services"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
   vm_size               = "Standard_A2m_v2"
-  node_count            = 2
   max_pods              = 110
   max_count             = 5
-  min_count             = 0
+  min_count             = 1
   enable_auto_scaling   = true
   mode                  = "User"
   os_type               = "Linux"
@@ -151,7 +146,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "services" {
 
   lifecycle {
     ignore_changes = [
-      tags, node_count,
+      tags,
     ]
   }
 }
@@ -160,7 +155,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "db" {
   name                  = "db"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
   vm_size               = "Standard_D2ads_v5"
-  node_count            = 2
   max_pods              = 110
   max_count             = 5
   min_count             = 2
@@ -175,7 +169,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "db" {
 
   lifecycle {
     ignore_changes = [
-      tags, node_count,
+      tags,
     ]
   }
 }
@@ -184,10 +178,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "monitoring" {
   name                  = "monitoring"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
   vm_size               = "Standard_D2ads_v5"
-  node_count            = 0
   max_pods              = 110
   max_count             = 10
-  min_count             = 0
+  min_count             = 1
   enable_auto_scaling   = true
   mode                  = "User"
   os_type               = "Linux"
@@ -199,7 +192,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "monitoring" {
 
   lifecycle {
     ignore_changes = [
-      tags, node_count,
+      tags,
     ]
   }
 }
