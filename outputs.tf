@@ -64,3 +64,18 @@ output "out_aks_phoenix_config" {
   value     = module.create-cluster.aks_phoenix_config
   sensitive = true
 }
+
+output "out_cosmos_uri" {
+  value     = module.create-cluster.cosmos_uri
+  sensitive = true
+}
+
+output "out_cosmos_key" {
+  value     = module.create-cluster.cosmos_key
+  sensitive = true
+}
+
+output "out_eventbus_uri" {
+  value     = "amqps://${module.create-cluster.eventbus_uri}.servicebus.windows.net"
+  sensitive = true
+}

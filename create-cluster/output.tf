@@ -41,6 +41,21 @@ output "managed_disk_id" {
   value = azurerm_managed_disk.cosmotech-database-disk.id
 }
 
+output "cosmos_uri" {
+  value     = var.create_cosmosdb ? azurerm_cosmosdb_account.cosmosdb[0].endpoint : null
+  sensitive = true
+}
+
+output "cosmos_key" {
+  value     = var.create_cosmosdb ? azurerm_cosmosdb_account.cosmosdb[0].primary_key : null
+  sensitive = true
+}
+
+output "eventbus_uri" {
+  value     = "amqps://${azurerm_eventhub_namespace.eventbus_uri.name}.servicebus.windows.net"
+  sensitive = true
+}
+
 output "aks_phoenix_config" {
   value     = azurerm_kubernetes_cluster.phoenixcluster.kube_config_raw
   sensitive = true

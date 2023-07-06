@@ -1,5 +1,7 @@
 locals {
-  dns_prefix = "${var.cluster_name}-aks"
+  dns_prefix    = "${var.cluster_name}-aks"
+  cosmosdb_name = "csm${var.cluster_name}"
+  eventhub_name = "evname-${var.cluster_name}"
 }
 
 resource "azurerm_kubernetes_cluster" "phoenixcluster" {
@@ -301,4 +303,66 @@ resource "azurerm_private_endpoint" "disk_private_endpoint" {
     name                 = "storage-dns-zone-group"
     private_dns_zone_ids = [var.private_dns_zone_id]
   }
+}
+
+
+resource "azurerm_cosmosdb_account" "cosmosdb" {
+  count               = var.create_cosmosdb ? 1 : 0
+  name                = local.cosmosdb_name
+  location            = var.location
+  kind                = "GlobalDocumentDB"
+  resource_group_name = var.resource_group
+
+  geo_location {
+    location          = var.location
+    failover_priority = 0
+  }
+  identity {
+    type = "SystemAssigned"
+  }
+  public_network_access_enabled      = true
+  enable_automatic_failover          = false
+  enable_multiple_write_locations    = false
+  is_virtual_network_filter_enabled  = false
+  access_key_metadata_writes_enabled = true # Important to give 'write' (aka POST) rights !!!
+  enable_free_tier                   = false
+  analytical_storage_enabled         = false
+  # create_mode                           = "Default"
+  offer_type                            = "Standard"
+  network_acl_bypass_for_azure_services = false
+  consistency_policy {
+    consistency_level       = "Session"
+    max_interval_in_seconds = 5
+    max_staleness_prefix    = 100
+  }
+  backup {
+    type                = "Periodic"
+    interval_in_minutes = 240
+    retention_in_hours  = 8
+    storage_redundancy  = "Geo"
+  }
+  capabilities {
+    name = "EnableServerless"
+  }
+  lifecycle {
+    ignore_changes = [
+      identity,
+    ]
+  }
+}
+
+resource "azurerm_cosmosdb_sql_database" "cosmosdb_sql" {
+  count               = var.create_cosmosdb ? 1 : 0
+  name                = "phoenix-core"
+  resource_group_name = azurerm_cosmosdb_account.cosmosdb[0].resource_group_name
+  account_name        = azurerm_cosmosdb_account.cosmosdb[0].name
+}
+
+resource "azurerm_eventhub_namespace" "eventbus_uri" {
+  name                          = local.eventhub_name
+  resource_group_name           = var.resource_group
+  location                      = var.location
+  sku                           = "Standard"
+  capacity                      = 2
+  public_network_access_enabled = true
 }

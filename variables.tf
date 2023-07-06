@@ -8,10 +8,12 @@ variable "subscription_id" {
 
 variable "client_id" {
   description = "The client id"
+  default     = ""
 }
 
 variable "client_secret" {
   description = "The client secret"
+  default     = ""
 }
 
 variable "platform_url" {
@@ -297,4 +299,9 @@ variable "disk_tier" {
 variable "kubernetes_version" {
   type    = string
   default = "1.25.5"
+}
+
+variable "create_cosmosdb" {
+  type    = bool
+  default = false
 }

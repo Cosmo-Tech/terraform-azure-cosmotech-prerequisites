@@ -65,3 +65,8 @@ variable "kubernetes_version" {
   type    = string
   default = "1.25.5"
 }
+
+variable "create_cosmosdb" {
+  type    = bool
+  default = false
+}

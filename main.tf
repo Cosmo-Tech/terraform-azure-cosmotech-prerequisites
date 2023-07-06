@@ -44,6 +44,7 @@ module "create-cluster" {
   subnet_id           = module.create-platform-prerequisite.out_subnet_id
   private_dns_zone_id = module.create-platform-prerequisite.out_private_dns_zone_id
   principal_id        = module.create-platform-prerequisite.out_platform_sp_object_id
+  create_cosmosdb     = var.create_cosmosdb
 
   depends_on = [
     module.create-platform-prerequisite
