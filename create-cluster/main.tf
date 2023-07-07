@@ -4,7 +4,7 @@ locals {
   eventhub_name     = "evname-${var.cluster_name}"
   kusto_name        = "kusto${var.cluster_name}"
   managed_disk_name = var.managed_disk_name != "" ? var.managed_disk_name : "cosmotech-database-disk"
-  storage_name      = "${var.cluster_name}${random_password.random_storage_id}"
+  storage_name      = "${var.cluster_name}${random_password.random_storage_id.result}"
 }
 
 resource "random_password" "random_storage_id" {
