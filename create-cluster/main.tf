@@ -4,6 +4,12 @@ locals {
   eventhub_name     = "evname-${var.cluster_name}"
   kusto_name        = "kusto${var.cluster_name}"
   managed_disk_name = var.managed_disk_name != "" ? var.managed_disk_name : "cosmotech-database-disk"
+  storage_name      = "${var.cluster_name}${random_password.random_storage_id}"
+}
+
+resource "random_password" "random_storage_id" {
+  length  = 6
+  special = false
 }
 
 resource "azurerm_kubernetes_cluster" "phoenixcluster" {
@@ -228,7 +234,7 @@ resource "azurerm_role_assignment" "managed_disk_role" {
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  name                            = var.resource_group
+  name                            = local.storage_name
   resource_group_name             = var.resource_group
   location                        = var.location
   account_tier                    = "Standard"
