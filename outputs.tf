@@ -79,3 +79,11 @@ output "out_eventbus_uri" {
   value     = "amqps://${module.create-cluster.eventbus_uri}.servicebus.windows.net"
   sensitive = true
 }
+
+output "out_adx_uri" {
+  value = module.create-cluster.adx_uri
+}
+
+output "out_adx_ingestion_uri" {
+  value = module.create-cluster.adx_ingestion_uri
+}

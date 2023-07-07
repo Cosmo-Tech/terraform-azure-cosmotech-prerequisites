@@ -2,6 +2,7 @@ locals {
   dns_prefix    = "${var.cluster_name}-aks"
   cosmosdb_name = "csm${var.cluster_name}"
   eventhub_name = "evname-${var.cluster_name}"
+  kusto_name    = "kusto${var.cluster_name}"
 }
 
 resource "azurerm_kubernetes_cluster" "phoenixcluster" {
@@ -364,5 +365,25 @@ resource "azurerm_eventhub_namespace" "eventbus_uri" {
   location                      = var.location
   sku                           = "Standard"
   capacity                      = 2
+  public_network_access_enabled = true
+}
+
+resource "azurerm_kusto_cluster" "kusto" {
+  name                = local.kusto_name
+  location            = var.location
+  resource_group_name = var.resource_group
+  sku {
+    name     = "Standard_D12_v2"
+    capacity = 2
+  }
+  identity {
+    type = "SystemAssigned"
+  }
+  trusted_external_tenants      = ["*"]
+  disk_encryption_enabled       = false
+  streaming_ingestion_enabled   = true
+  purge_enabled                 = false
+  double_encryption_enabled     = false
+  engine                        = "V2"
   public_network_access_enabled = true
 }
