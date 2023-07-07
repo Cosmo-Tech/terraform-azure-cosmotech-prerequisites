@@ -42,12 +42,12 @@ output "managed_disk_id" {
 }
 
 output "cosmos_uri" {
-  value     = var.create_cosmosdb ? azurerm_cosmosdb_account.cosmosdb[0].endpoint : null
+  value     = var.create_cosmosdb ? azurerm_cosmosdb_account.cosmosdb[0].endpoint : ""
   sensitive = true
 }
 
 output "cosmos_key" {
-  value     = var.create_cosmosdb ? azurerm_cosmosdb_account.cosmosdb[0].primary_key : null
+  value     = var.create_cosmosdb ? azurerm_cosmosdb_account.cosmosdb[0].primary_key : ""
   sensitive = true
 }
 

@@ -76,7 +76,7 @@ output "out_cosmos_key" {
 }
 
 output "out_eventbus_uri" {
-  value     = "amqps://${module.create-cluster.eventbus_uri}.servicebus.windows.net"
+  value     = module.create-cluster.eventbus_uri
   sensitive = true
 }
 
