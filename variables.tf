@@ -18,10 +18,12 @@ variable "client_secret" {
 
 variable "platform_url" {
   description = "The platform url"
+  default     = ""
 }
 
 variable "identifier_uri" {
   description = "The platform identifier uri"
+  default     = ""
 }
 
 variable "project_stage" {
@@ -227,13 +229,13 @@ variable "create_dnsrecord" {
 variable "dns_zone_name" {
   description = "The DNS zone name to create platform subdomain. Example: api.cosmotech.com"
   type        = string
-  default     = ""
+  default     = "api.cosmotech.com"
 }
 
 variable "dns_zone_rg" {
   description = "The DNS zone resource group"
   type        = string
-  default     = ""
+  default     = "phoenix"
 }
 
 variable "dns_record" {
@@ -257,12 +259,12 @@ variable "vnet_iprange" {
 variable "api_version_path" {
   description = "The API version path"
   type        = string
-  default     = "/"
+  default     = "/v2/"
 }
 
 variable "managed_disk_name" {
   type    = string
-  default = "cosmotech-database-disk"
+  default = ""
 }
 
 variable "image_path" {

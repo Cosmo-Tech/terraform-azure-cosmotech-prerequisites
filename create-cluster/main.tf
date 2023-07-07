@@ -1,8 +1,9 @@
 locals {
-  dns_prefix    = "${var.cluster_name}-aks"
-  cosmosdb_name = "csm${var.cluster_name}"
-  eventhub_name = "evname-${var.cluster_name}"
-  kusto_name    = "kusto${var.cluster_name}"
+  dns_prefix        = "${var.cluster_name}-aks"
+  cosmosdb_name     = "csm${var.cluster_name}"
+  eventhub_name     = "evname-${var.cluster_name}"
+  kusto_name        = "kusto${var.cluster_name}"
+  managed_disk_name = var.managed_disk_name != "" ? var.managed_disk_name : "cosmotech-database-disk"
 }
 
 resource "azurerm_kubernetes_cluster" "phoenixcluster" {
@@ -207,7 +208,7 @@ resource "azurerm_disk_access" "cosmotech-disk" {
 }
 
 resource "azurerm_managed_disk" "cosmotech-database-disk" {
-  name                 = var.managed_disk_name
+  name                 = local.managed_disk_name
   resource_group_name  = var.resource_group
   disk_size_gb         = var.disk_size_gb
   location             = var.location

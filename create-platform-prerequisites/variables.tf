@@ -21,6 +21,7 @@ variable "client_secret" {
 variable "platform_url" {
   description = "The platform url"
   type        = string
+  default     = ""
 }
 
 variable "identifier_uri" {

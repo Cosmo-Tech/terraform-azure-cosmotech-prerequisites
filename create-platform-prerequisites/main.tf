@@ -1,7 +1,11 @@
 locals {
-  pre_name    = "Cosmo Tech "
-  post_name   = " ${var.project_stage} For ${var.customer_name} ${var.project_name}"
-  subnet_name = "default"
+  pre_name       = "Cosmo Tech "
+  post_name      = " ${var.project_stage} For ${var.customer_name} ${var.project_name}"
+  subnet_name    = "default"
+  identifier_uri = "https://${var.dns_record}.${var.dns_zone_name}"
+  platform_url   = var.platform_url != "" ? var.platform_url : "https://${var.dns_record}.${var.dns_zone_name}"
+  webapp_url     = var.webapp_url != "" ? var.webapp_url : "https://${var.dns_record}.app.cosmotech.com"
+  vnet_iprange   = var.vnet_iprange != "" ? var.vnet_iprange : "10.21.0.0/16"
 }
 
 data "azuread_users" "owners" {
@@ -11,7 +15,7 @@ data "azuread_users" "owners" {
 # Azure AD
 resource "azuread_application" "platform" {
   display_name     = "${local.pre_name}Platform${local.post_name}"
-  identifier_uris  = var.identifier_uri != "" ? [var.identifier_uri] : null
+  identifier_uris  = var.identifier_uri != "" ? [var.identifier_uri] : [local.identifier_uri]
   logo_image       = filebase64(var.image_path)
   owners           = data.azuread_users.owners.object_ids
   sign_in_audience = var.audience
@@ -28,7 +32,7 @@ resource "azuread_application" "platform" {
   }
 
   single_page_application {
-    redirect_uris = ["${var.platform_url}${var.api_version_path}swagger-ui/oauth2-redirect.html"]
+    redirect_uris = ["${local.platform_url}${var.api_version_path}swagger-ui/oauth2-redirect.html"]
   }
 
   web {
@@ -141,7 +145,7 @@ resource "azuread_application" "swagger" {
   }
 
   single_page_application {
-    redirect_uris = ["${var.platform_url}${var.api_version_path}swagger-ui/oauth2-redirect.html"]
+    redirect_uris = ["${local.platform_url}${var.api_version_path}swagger-ui/oauth2-redirect.html"]
   }
 
   web {
@@ -260,7 +264,7 @@ resource "azuread_application" "webapp" {
   }
 
   single_page_application {
-    redirect_uris = ["http://localhost:3000/scenario", "${var.webapp_url}/platform", "${var.webapp_url}/sign-in"]
+    redirect_uris = ["http://localhost:3000/scenario", "${local.webapp_url}/platform", "${local.webapp_url}/sign-in"]
   }
 }
 
@@ -393,11 +397,11 @@ resource "azurerm_virtual_network" "platform_vnet" {
   name                = "CosmoTech${var.customer_name}${var.project_name}${var.project_stage}VNet"
   location            = var.location
   resource_group_name = azurerm_resource_group.platform_rg.name
-  address_space       = [var.vnet_iprange]
+  address_space       = [local.vnet_iprange]
 
   subnet {
     name           = local.subnet_name
-    address_prefix = var.vnet_iprange
+    address_prefix = local.vnet_iprange
   }
 
   tags = {
