@@ -70,3 +70,9 @@ variable "create_cosmosdb" {
   type    = bool
   default = false
 }
+
+variable "create_adx" {
+  type        = bool
+  default     = true
+  description = "If false, adx_ingestion_uri and adx_uri must be set manually in create-platform module"
+}

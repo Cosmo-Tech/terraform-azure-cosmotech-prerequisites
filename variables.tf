@@ -307,3 +307,8 @@ variable "create_cosmosdb" {
   type    = bool
   default = false
 }
+
+variable "create_adx" {
+  type    = bool
+  default = true
+}

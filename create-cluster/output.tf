@@ -62,9 +62,9 @@ output "aks_phoenix_config" {
 }
 
 output "adx_uri" {
-  value = azurerm_kusto_cluster.kusto.uri
+  value = var.create_adx ? azurerm_kusto_cluster.kusto[0].uri : ""
 }
 
 output "adx_ingestion_uri" {
-  value = azurerm_kusto_cluster.kusto.data_ingestion_uri
+  value = var.create_adx ? azurerm_kusto_cluster.kusto[0].data_ingestion_uri : ""
 }

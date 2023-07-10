@@ -377,6 +377,7 @@ resource "azurerm_eventhub_namespace" "eventbus_uri" {
 }
 
 resource "azurerm_kusto_cluster" "kusto" {
+  count               = var.create_adx ? 1 : 0
   name                = local.kusto_name
   location            = var.location
   resource_group_name = var.resource_group
