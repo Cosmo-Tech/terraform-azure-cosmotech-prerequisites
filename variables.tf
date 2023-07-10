@@ -312,3 +312,9 @@ variable "create_adx" {
   type    = bool
   default = true
 }
+
+variable "create_babylon" {
+  description = "Create the Azure Active Directory Application for Babylon"
+  type        = bool
+  default     = true
+}
