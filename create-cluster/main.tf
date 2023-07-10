@@ -10,7 +10,7 @@ locals {
 resource "random_string" "random_storage_id" {
   length  = 6
   special = false
-  upper = false
+  upper   = false
 }
 
 resource "azurerm_kubernetes_cluster" "phoenixcluster" {
@@ -145,7 +145,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "services" {
   vm_size               = "Standard_A2m_v2"
   max_pods              = 110
   max_count             = 5
-  min_count             = 1
+  min_count             = 2
   enable_auto_scaling   = true
   mode                  = "User"
   os_type               = "Linux"
