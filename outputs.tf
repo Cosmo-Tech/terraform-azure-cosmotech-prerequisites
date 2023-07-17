@@ -87,3 +87,7 @@ output "out_adx_uri" {
 output "out_adx_ingestion_uri" {
   value = module.create-cluster.adx_ingestion_uri
 }
+
+output "out_fqdn" {
+  value = module.create-platform-prerequisite.out_fqdn
+}
