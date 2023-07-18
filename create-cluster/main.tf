@@ -37,17 +37,15 @@ resource "azurerm_kubernetes_cluster" "phoenixcluster" {
   }
 
   default_node_pool {
-    name           = "system"
-    vm_size               = "Standard_A2_v2"
-    max_pods              = 110
-    max_count             = 6
-    min_count             = 3
-    enable_auto_scaling   = true
-    mode                  = "System"
-    os_type               = "Linux"
-    os_disk_size_gb       = 128
-    os_disk_type          = "Managed"
-    vnet_subnet_id        = var.subnet_id
+    name                = "system"
+    vm_size             = "Standard_A2_v2"
+    max_pods            = 110
+    max_count           = 6
+    min_count           = 3
+    enable_auto_scaling = true
+    os_disk_size_gb     = 128
+    os_disk_type        = "Managed"
+    vnet_subnet_id      = var.subnet_id
   }
 
   lifecycle {
