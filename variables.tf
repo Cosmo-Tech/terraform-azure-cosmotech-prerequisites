@@ -44,6 +44,7 @@ variable "project_stage" {
 
 variable "cluster_name" {
   type = string
+  default = ""
 }
 
 variable "customer_name" {

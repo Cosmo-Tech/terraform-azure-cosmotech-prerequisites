@@ -37,10 +37,17 @@ resource "azurerm_kubernetes_cluster" "phoenixcluster" {
   }
 
   default_node_pool {
-    name           = "default"
-    node_count     = 1
-    vm_size        = "Standard_D2_v2"
-    vnet_subnet_id = var.subnet_id
+    name           = "system"
+    vm_size               = "Standard_A2_v2"
+    max_pods              = 110
+    max_count             = 6
+    min_count             = 3
+    enable_auto_scaling   = true
+    mode                  = "System"
+    os_type               = "Linux"
+    os_disk_size_gb       = 128
+    os_disk_type          = "Managed"
+    vnet_subnet_id        = var.subnet_id
   }
 
   lifecycle {
@@ -50,25 +57,25 @@ resource "azurerm_kubernetes_cluster" "phoenixcluster" {
   }
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "system" {
-  name                  = "system"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
-  vm_size               = "Standard_A2_v2"
-  max_pods              = 110
-  max_count             = 6
-  min_count             = 3
-  enable_auto_scaling   = true
-  mode                  = "System"
-  os_type               = "Linux"
-  os_disk_size_gb       = 128
-  os_disk_type          = "Managed"
-  vnet_subnet_id        = var.subnet_id
-  lifecycle {
-    ignore_changes = [
-      tags,
-    ]
-  }
-}
+# resource "azurerm_kubernetes_cluster_node_pool" "system" {
+#   name                  = "system"
+#   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
+#   vm_size               = "Standard_A2_v2"
+#   max_pods              = 110
+#   max_count             = 6
+#   min_count             = 3
+#   enable_auto_scaling   = true
+#   mode                  = "System"
+#   os_type               = "Linux"
+#   os_disk_size_gb       = 128
+#   os_disk_type          = "Managed"
+#   vnet_subnet_id        = var.subnet_id
+#   lifecycle {
+#     ignore_changes = [
+#       tags,
+#     ]
+#   }
+# }
 
 resource "azurerm_kubernetes_cluster_node_pool" "basic" {
   name                  = "basic"
