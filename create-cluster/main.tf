@@ -5,6 +5,13 @@ locals {
   kusto_name        = "kusto${var.cluster_name}"
   managed_disk_name = var.managed_disk_name != "" ? var.managed_disk_name : "cosmotech-database-disk"
   storage_name      = "${var.cluster_name}${random_string.random_storage_id.result}"
+  tags = {
+    vendor      = "cosmotech"
+    stage       = var.project_stage
+    customer    = var.customer_name
+    project     = var.project_name
+    cost_center = var.cost_center
+  }
 }
 
 resource "random_string" "random_storage_id" {
@@ -21,6 +28,7 @@ resource "azurerm_kubernetes_cluster" "phoenixcluster" {
   kubernetes_version                = var.kubernetes_version
   role_based_access_control_enabled = true
   private_cluster_enabled           = false
+  tags                              = local.tags
 
   network_profile {
     load_balancer_sku = "standard"
@@ -55,26 +63,6 @@ resource "azurerm_kubernetes_cluster" "phoenixcluster" {
   }
 }
 
-# resource "azurerm_kubernetes_cluster_node_pool" "system" {
-#   name                  = "system"
-#   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
-#   vm_size               = "Standard_A2_v2"
-#   max_pods              = 110
-#   max_count             = 6
-#   min_count             = 3
-#   enable_auto_scaling   = true
-#   mode                  = "System"
-#   os_type               = "Linux"
-#   os_disk_size_gb       = 128
-#   os_disk_type          = "Managed"
-#   vnet_subnet_id        = var.subnet_id
-#   lifecycle {
-#     ignore_changes = [
-#       tags,
-#     ]
-#   }
-# }
-
 resource "azurerm_kubernetes_cluster_node_pool" "basic" {
   name                  = "basic"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
@@ -90,6 +78,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "basic" {
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "compute", "cosmotech.com/size" = "basic" }
   vnet_subnet_id        = var.subnet_id
+  tags                  = local.tags
 
   lifecycle {
     ignore_changes = [
@@ -113,6 +102,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "highcpu" {
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "compute", "cosmotech.com/size" = "highcpu" }
   vnet_subnet_id        = var.subnet_id
+  tags                  = local.tags
 
   lifecycle {
     ignore_changes = [
@@ -136,6 +126,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "highmemory" {
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "compute", "cosmotech.com/size" = "highmemory" }
   vnet_subnet_id        = var.subnet_id
+  tags                  = local.tags
 
   lifecycle {
     ignore_changes = [
@@ -159,6 +150,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "services" {
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "services" }
   vnet_subnet_id        = var.subnet_id
+  tags                  = local.tags
 
   lifecycle {
     ignore_changes = [
@@ -182,6 +174,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "db" {
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "db" }
   vnet_subnet_id        = var.subnet_id
+  tags                  = local.tags
 
   lifecycle {
     ignore_changes = [
@@ -205,6 +198,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "monitoring" {
   node_taints           = ["vendor=cosmotech:NoSchedule"]
   node_labels           = { "cosmotech.com/tier" = "monitoring" }
   vnet_subnet_id        = var.subnet_id
+  tags                  = local.tags
 
   lifecycle {
     ignore_changes = [
@@ -217,6 +211,7 @@ resource "azurerm_disk_access" "cosmotech-disk" {
   name                = "cosmotech-managed-disk-access"
   resource_group_name = var.resource_group
   location            = var.location
+  tags                = local.tags
 }
 
 resource "azurerm_managed_disk" "cosmotech-database-disk" {
@@ -231,6 +226,8 @@ resource "azurerm_managed_disk" "cosmotech-database-disk" {
   public_network_access_enabled = false
   network_access_policy         = "AllowPrivate"
   disk_access_id                = azurerm_disk_access.cosmotech-disk.id
+
+  tags = local.tags
 }
 
 resource "azurerm_role_assignment" "managed_disk_role" {
@@ -252,6 +249,7 @@ resource "azurerm_storage_account" "storage_account" {
   enable_https_traffic_only       = true
   access_tier                     = "Hot"
   public_network_access_enabled   = false # Must be false with private endpoints
+  tags                            = local.tags
   network_rules {
     bypass         = ["AzureServices"]
     default_action = "Deny" # Same as for public_network_access
@@ -276,6 +274,7 @@ resource "azurerm_container_registry" "acr" {
   public_network_access_enabled = true
   network_rule_bypass_option    = "AzureServices"
   zone_redundancy_enabled       = false
+  tags                          = local.tags
 }
 
 resource "azurerm_private_endpoint" "storage_private_endpoint" {
@@ -323,6 +322,7 @@ resource "azurerm_cosmosdb_account" "cosmosdb" {
   location            = var.location
   kind                = "GlobalDocumentDB"
   resource_group_name = var.resource_group
+  tags                = local.tags
 
   geo_location {
     location          = var.location
@@ -376,6 +376,7 @@ resource "azurerm_eventhub_namespace" "eventbus_uri" {
   sku                           = "Standard"
   capacity                      = 2
   public_network_access_enabled = true
+  tags                          = local.tags
 }
 
 resource "azurerm_kusto_cluster" "kusto" {
@@ -397,4 +398,5 @@ resource "azurerm_kusto_cluster" "kusto" {
   double_encryption_enabled     = false
   engine                        = "V2"
   public_network_access_enabled = true
+  tags                          = local.tags
 }

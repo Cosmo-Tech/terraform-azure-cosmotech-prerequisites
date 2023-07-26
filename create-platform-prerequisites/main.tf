@@ -6,6 +6,13 @@ locals {
   platform_url   = var.platform_url != "" ? var.platform_url : "https://${var.dns_record}.${var.dns_zone_name}"
   webapp_url     = var.webapp_url != "" ? var.webapp_url : "https://${var.dns_record}.app.cosmotech.com"
   vnet_iprange   = var.vnet_iprange != "" ? var.vnet_iprange : "10.21.0.0/16"
+  tags = {
+    vendor      = "cosmotech"
+    stage       = var.project_stage
+    customer    = var.customer_name
+    project     = var.project_name
+    cost_center = var.cost_center
+  }
 }
 
 data "azuread_users" "owners" {
@@ -289,12 +296,7 @@ resource "azuread_group" "platform_group" {
 resource "azurerm_resource_group" "platform_rg" {
   name     = var.resource_group
   location = var.location
-  tags = {
-    vendor   = "cosmotech"
-    stage    = var.project_stage
-    customer = var.customer_name
-    project  = var.project_name
-  }
+  tags     = local.tags
 }
 
 resource "azuread_application" "babylon" {
@@ -358,13 +360,7 @@ resource "azurerm_public_ip" "publicip" {
   location            = var.location
   allocation_method   = "Static"
   sku                 = "Standard"
-
-  tags = {
-    vendor   = "cosmotech"
-    stage    = var.project_stage
-    customer = var.customer_name
-    project  = var.project_name
-  }
+  tags                = local.tags
 }
 
 resource "azurerm_role_assignment" "publicip_contributor" {
@@ -404,12 +400,7 @@ resource "azurerm_virtual_network" "platform_vnet" {
     address_prefix = local.vnet_iprange
   }
 
-  tags = {
-    vendor   = "cosmotech"
-    stage    = var.project_stage
-    customer = var.customer_name
-    project  = var.project_name
-  }
+  tags = local.tags
 }
 
 resource "azurerm_role_assignment" "vnet_network_contributor" {

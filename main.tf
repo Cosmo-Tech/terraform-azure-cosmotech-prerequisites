@@ -27,6 +27,7 @@ module "create-platform-prerequisite" {
   customer_name    = var.customer_name
   user_app_role    = var.user_app_role
   image_path       = var.image_path
+  cost_center      = var.cost_center
 }
 
 module "create-cluster" {
@@ -40,6 +41,10 @@ module "create-cluster" {
   client_secret       = module.create-platform-prerequisite.out_platform_password
   managed_disk_name   = var.managed_disk_name
   cluster_name        = var.cluster_name
+  project_stage       = var.project_stage
+  project_name        = var.project_name
+  customer_name       = var.customer_name
+  cost_center         = var.cost_center
   application_id      = module.create-platform-prerequisite.out_platform_clientid
   subnet_id           = module.create-platform-prerequisite.out_subnet_id
   private_dns_zone_id = module.create-platform-prerequisite.out_private_dns_zone_id

@@ -180,3 +180,8 @@ variable "image_path" {
   type    = string
   default = "./cosmotech.png"
 }
+
+variable "cost_center" {
+  type    = string
+  default = "NA"
+}

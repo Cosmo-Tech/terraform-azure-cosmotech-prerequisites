@@ -319,3 +319,8 @@ variable "create_babylon" {
   type        = bool
   default     = true
 }
+
+variable "cost_center" {
+  type    = string
+  default = "NA"
+}
