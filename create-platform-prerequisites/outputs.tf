@@ -127,3 +127,7 @@ output "out_subnet_id" {
 output "out_private_dns_zone_id" {
   value = azurerm_private_dns_zone.private_dns.id
 }
+
+output "out_resource_group_id" {
+  value = azurerm_resource_group.platform_rg.id
+}
