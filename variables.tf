@@ -301,7 +301,7 @@ variable "disk_tier" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.25.5"
+  default = "1.25.6"
 }
 
 variable "create_cosmosdb" {

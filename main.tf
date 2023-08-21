@@ -51,6 +51,7 @@ module "create-cluster" {
   principal_id        = module.create-platform-prerequisite.out_platform_sp_object_id
   create_cosmosdb     = var.create_cosmosdb
   create_adx          = var.create_adx
+  kubernetes_version  = var.kubernetes_version
 
   depends_on = [
     module.create-platform-prerequisite

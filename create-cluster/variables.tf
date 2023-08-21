@@ -63,7 +63,7 @@ variable "subnet_id" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.25.5"
+  default = "1.25.6"
 }
 
 variable "create_cosmosdb" {
