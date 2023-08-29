@@ -138,7 +138,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "highmemory" {
 resource "azurerm_kubernetes_cluster_node_pool" "services" {
   name                  = "services"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.phoenixcluster.id
-  vm_size               = "Standard_A2m_v2"
+  vm_size               = "Standard_B4ms"
   max_pods              = 110
   max_count             = 5
   min_count             = 2
