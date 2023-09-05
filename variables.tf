@@ -324,3 +324,8 @@ variable "cost_center" {
   type    = string
   default = "NA"
 }
+
+variable "create_backup" {
+  type    = bool
+  default = true
+}

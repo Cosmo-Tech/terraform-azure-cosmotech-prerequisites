@@ -56,3 +56,13 @@ module "create-cluster" {
     module.create-platform-prerequisite
   ]
 }
+
+module "create-backup" {
+  source = "./create-backup"
+
+  count             = var.create_backup ? 1 : 0
+  location          = var.location
+  resource_group    = var.resource_group
+  resource_group_id = module.create-platform-prerequisite.out_platform_resource_group_id
+  managed_disk_id   = module.create-cluster.managed_disk_id
+}

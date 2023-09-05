@@ -110,6 +110,10 @@ output "out_vnet_resource_group" {
   value = azurerm_resource_group.platform_rg.name
 }
 
+output "out_platform_resource_group_id" {
+  value = azurerm_resource_group.platform_rg.id
+}
+
 output "out_subnet_name" {
   value = local.subnet_name
 }
