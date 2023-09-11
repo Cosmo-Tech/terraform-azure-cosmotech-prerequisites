@@ -1,3 +1,8 @@
+locals {
+  backup_instance_name = "cosmo-backup-instance-${var.resource_group}"
+  backup_policy_name   = "cosmo-backup-policy-${var.resource_group}"
+}
+
 resource "azurerm_data_protection_backup_vault" "vault" {
   name                = "cosmo-backup-vault"
   resource_group_name = var.resource_group
@@ -11,7 +16,7 @@ resource "azurerm_data_protection_backup_vault" "vault" {
 }
 
 resource "azurerm_data_protection_backup_policy_disk" "backup_policy" {
-  name     = "cosmo-backup-policy"
+  name     = local.backup_policy_name
   vault_id = azurerm_data_protection_backup_vault.vault.id
 
   backup_repeating_time_intervals = ["R/2021-05-19T06:33:16+00:00/PT4H"]
@@ -49,7 +54,7 @@ resource "azurerm_role_assignment" "backup_reader_role" {
 }
 
 resource "azurerm_data_protection_backup_instance_disk" "instance" {
-  name                         = "cosmo-backup-instance"
+  name                         = local.backup_instance_name
   location                     = var.location
   vault_id                     = azurerm_data_protection_backup_vault.vault.id
   disk_id                      = var.managed_disk_id
