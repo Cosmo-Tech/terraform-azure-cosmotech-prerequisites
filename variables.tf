@@ -329,3 +329,8 @@ variable "create_backup" {
   type    = bool
   default = true
 }
+
+variable "tenant_name" {
+  type    = string
+  default = "phoenix"
+}

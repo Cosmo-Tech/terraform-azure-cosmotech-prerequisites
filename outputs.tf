@@ -7,31 +7,31 @@ output "out_platform_sp_client_secret" {
 }
 
 output "out_storage_account_name" {
-  value = module.create-cluster.out_storage_account_name
+  value = module.create-tenant-resources.out_storage_account_name
 }
 
 output "out_storage_account_key" {
-  value     = module.create-cluster.out_storage_account_key
+  value     = module.create-tenant-resources.out_storage_account_key
   sensitive = true
 }
 
 output "out_acr_login_server" {
-  value     = module.create-cluster.out_acr_login_server
+  value     = module.create-tenant-resources.out_acr_login_server
   sensitive = true
 }
 
 output "out_acr_login_username" {
-  value     = module.create-cluster.out_acr_login_username
+  value     = module.create-tenant-resources.out_acr_login_username
   sensitive = true
 }
 
 output "out_acr_login_password" {
-  value     = module.create-cluster.out_acr_login_password
+  value     = module.create-tenant-resources.out_acr_login_password
   sensitive = true
 }
 
 output "managed_disk_id" {
-  value = module.create-cluster.managed_disk_id
+  value = module.create-tenant-resources.managed_disk_id
 }
 
 output "out_public_ip" {
@@ -66,26 +66,26 @@ output "out_aks_phoenix_config" {
 }
 
 output "out_cosmos_uri" {
-  value     = module.create-cluster.cosmos_uri
+  value     = module.create-tenant-resources.cosmos_uri
   sensitive = true
 }
 
 output "out_cosmos_key" {
-  value     = module.create-cluster.cosmos_key
+  value     = module.create-tenant-resources.cosmos_key
   sensitive = true
 }
 
 output "out_eventbus_uri" {
-  value     = module.create-cluster.eventbus_uri
+  value     = module.create-tenant-resources.eventbus_uri
   sensitive = true
 }
 
 output "out_adx_uri" {
-  value = module.create-cluster.adx_uri
+  value = module.create-tenant-resources.adx_uri
 }
 
 output "out_adx_ingestion_uri" {
-  value = module.create-cluster.adx_ingestion_uri
+  value = module.create-tenant-resources.adx_ingestion_uri
 }
 
 output "out_fqdn" {

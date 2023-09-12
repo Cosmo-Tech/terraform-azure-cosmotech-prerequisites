@@ -33,28 +33,41 @@ module "create-platform-prerequisite" {
 module "create-cluster" {
   source = "./create-cluster"
 
+  location       = var.location
+  resource_group = var.resource_group
+  client_secret  = module.create-platform-prerequisite.out_platform_password
+  cluster_name   = var.cluster_name
+  project_stage  = var.project_stage
+  project_name   = var.project_name
+  customer_name  = var.customer_name
+  cost_center    = var.cost_center
+  application_id = module.create-platform-prerequisite.out_platform_clientid
+  subnet_id      = module.create-platform-prerequisite.out_subnet_id
+
+  depends_on = [
+    module.create-platform-prerequisite
+  ]
+}
+
+module "create-tenant-resources" {
+  source = "./create-tenant-resources"
+
   location            = var.location
   resource_group      = var.resource_group
-  tenant_id           = var.tenant_id
-  subscription_id     = var.subscription_id
-  client_id           = var.client_id
-  client_secret       = module.create-platform-prerequisite.out_platform_password
   managed_disk_name   = var.managed_disk_name
   cluster_name        = var.cluster_name
   project_stage       = var.project_stage
   project_name        = var.project_name
   customer_name       = var.customer_name
   cost_center         = var.cost_center
-  application_id      = module.create-platform-prerequisite.out_platform_clientid
   subnet_id           = module.create-platform-prerequisite.out_subnet_id
   private_dns_zone_id = module.create-platform-prerequisite.out_private_dns_zone_id
   principal_id        = module.create-platform-prerequisite.out_platform_sp_object_id
   create_cosmosdb     = var.create_cosmosdb
   create_adx          = var.create_adx
+  tenant_name         = var.tenant_name
 
-  depends_on = [
-    module.create-platform-prerequisite
-  ]
+  depends_on = [module.create-cluster]
 }
 
 module "create-backup" {
@@ -64,5 +77,5 @@ module "create-backup" {
   location          = var.location
   resource_group    = var.resource_group
   resource_group_id = module.create-platform-prerequisite.out_platform_resource_group_id
-  managed_disk_id   = module.create-cluster.managed_disk_id
+  managed_disk_id   = module.create-tenant-resources.managed_disk_id
 }
