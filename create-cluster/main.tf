@@ -2,9 +2,10 @@ locals {
   dns_prefix        = "${var.cluster_name}-aks"
   cosmosdb_name     = "csm${var.cluster_name}"
   eventhub_name     = "evname-${var.cluster_name}"
-  kusto_name        = "kusto${var.cluster_name}"
+  kusto_name        = "kusto${replace(var.resource_group, "/[[:^alnum:]]/", "")}"
   managed_disk_name = var.managed_disk_name != "" ? var.managed_disk_name : "cosmotech-database-disk"
   storage_name      = "${var.cluster_name}${random_string.random_storage_id.result}"
+  acr_name          = replace(var.resource_group, "/[[:^alnum:]]/", "")
   tags = {
     vendor      = "cosmotech"
     stage       = var.project_stage
@@ -257,7 +258,7 @@ resource "azurerm_storage_account" "storage_account" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                      = var.resource_group
+  name                      = local.acr_name
   resource_group_name       = var.resource_group
   location                  = var.location
   sku                       = "Standard"
