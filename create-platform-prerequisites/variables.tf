@@ -163,7 +163,7 @@ variable "vnet_iprange" {
 variable "api_version_path" {
   description = "The API version path"
   type        = string
-  default     = "/"
+  default     = "/v2/"
 }
 
 variable "user_app_role" {
