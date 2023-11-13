@@ -4,7 +4,7 @@ locals {
   eventhub_name     = "evname-${var.cluster_name}"
   kusto_name        = "kusto${replace(var.resource_group, "/[[:^alnum:]]/", "")}"
   managed_disk_name = var.managed_disk_name != "" ? var.managed_disk_name : "cosmotech-database-disk"
-  storage_name      = "${replace(var.cluster_name, "/[[:^alnum:]]/", "")}${random_string.random_storage_id.result}"
+  storage_name      = substr("${replace(var.cluster_name, "/[[:^alnum:]]/", "")}${random_string.random_storage_id.result}", 0, 23)
   acr_name          = replace(var.resource_group, "/[[:^alnum:]]/", "")
   tags = {
     vendor      = "cosmotech"
